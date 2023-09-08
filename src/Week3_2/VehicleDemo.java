@@ -15,6 +15,10 @@ public class VehicleDemo {
         motorcycle.getInfo();
         System.out.println("\n");
         bus.start();
+        bus.refuel();
+        bus.drive();
+        bus.drive();
+        System.out.println("Fuel efficiency: " + bus.calculateFuelEfficiency() + "KPL");
         bus.stop();
         bus.getInfo();
     }

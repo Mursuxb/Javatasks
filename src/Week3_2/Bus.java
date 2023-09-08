@@ -45,4 +45,23 @@ public class Bus extends AbstractVehicle {
         System.out.println("Fuel: " + fuelType);
         System.out.println("Passenger capacity: " + this.passengerCapacity);
     }
+
+    @Override
+    public void refuel() {
+        this.distanceTraveled = 0;
+        this.fuelAmount = 60;
+    }
+
+    @Override
+    public void drive() {
+        if (this.fuelAmount >= 0.5) {
+            this.distanceTraveled += 10;
+            this.fuelAmount -= 0.5;
+        } else System.out.println("Not enough fuel");
+    }
+
+    @Override
+    public double calculateFuelEfficiency() {
+        return this.distanceTraveled / (60 - this.fuelAmount);
+    }
 }

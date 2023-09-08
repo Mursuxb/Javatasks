@@ -3,6 +3,8 @@ package Week3_2;
 public abstract class AbstractVehicle implements Vehicle{
     protected String fuelType;
     protected String type;
+    protected double distanceTraveled;
+    protected double fuelAmount;
 
     public AbstractVehicle(String fuelType) {
         this.fuelType = fuelType;
