@@ -8,10 +8,17 @@ public class Dictionary {
     public Dictionary() {
         this.dictionary = new HashMap<String, String>();
     }
+
     public void addWord(String word, String definition) {
         this.dictionary.put(word, definition);
     }
+
     public String getDefinition(String word) {
-        return this.dictionary.get(word);
+        if (this.dictionary.containsKey(word)) {
+            return this.dictionary.get(word);
+        } else {
+            return "Word not found";
+        }
+
     }
 }
