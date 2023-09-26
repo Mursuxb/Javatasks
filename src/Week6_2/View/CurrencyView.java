@@ -65,6 +65,12 @@ public class CurrencyView extends Application {
         targetCurrency.getItems().addAll("EUR", "USD", "GBP", "SEK");
         layout.setMargin(targetCurrency, insets);
         layout.add(targetCurrency, 3, 1);
+        Label directions = new Label("Please enter the amount you want to convert and select the currencies");
+        Label directions2 = new Label("you want to convert from and to. Then press the convert button.");
+        Label gap = new Label(" ");
+        layout.add(gap, 0, 3);
+        layout.add(directions, 0, 4);
+        layout.add(directions2, 0, 5);
 
 
         Scene scene = new Scene(layout);
