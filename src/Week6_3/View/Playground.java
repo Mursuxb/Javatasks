@@ -15,20 +15,27 @@ import javafx.stage.Stage;
 
 public class Playground extends Application {
 
+    private double mouseX = 0, mouseY = 0;
+    private boolean inArea = false;
     private int canvasWidth = 800;
     private int canvasHeight = 800;
-    private static final int CELL_SIZE = 20;
     private Canvas canvas;
     private GraphicsContext gc;
     private MovePet controller;
+    private double xPosition = 0, yPosition = 0;
+
+    private double imageWidth = 860 / 8;
+    private double imageHeight = 555 / 8;
+    private Image hamster = new Image("hamster.png", imageWidth, imageHeight, true, false);
+
 
     @Override
     public void start(Stage primaryStage) {
         controller = new MovePet(this, new Pet(canvasHeight / 2, canvasWidth / 2));
         canvas = new Canvas(canvasHeight, canvasWidth);
         gc = canvas.getGraphicsContext2D();
-        Image hamster = new Image("hamster.png", true);
-        gc.drawImage(hamster, 0, 0, 20, 20);
+
+        gc.drawImage(hamster, xPosition, yPosition);
 
         StackPane root = new StackPane(canvas);
         Scene scene = new Scene(root, canvasHeight, canvasWidth);
@@ -36,19 +43,22 @@ public class Playground extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+
         canvas.setOnMouseMoved(event -> {
-            double x = event.getX();
-            double y = event.getY();
+            mouseX = event.getX();
+            mouseY = event.getY();
 //            double[] petPosition = controller.move(x, y);
-            controller.move(x, y);
-            System.out.println("Mouse moved to (" + x + ", " + y + ")");
+            controller.move(mouseX, mouseY);
+//            System.out.println("Mouse moved to (" + mouseX + ", " + mouseY + ")");
         });
         canvas.setOnMouseEntered(event -> {
             controller.mouseInArea();
+            inArea = true;
             System.out.println("Mouse entered canvas");
         });
         canvas.setOnMouseExited(event -> {
             controller.mouseOutArea();
+            inArea = false;
             System.out.println("Mouse exited canvas");
         });
     }
@@ -61,12 +71,13 @@ public class Playground extends Application {
         return canvasWidth;
     }
 
-//    public void updateCanvas(double playerX, double playerY) {
-//        gc.clearRect(10, 10, canvasHeight, canvasWidth);
-//
-//        gc.setFill(Color.RED);
-//        double x = playerX * CELL_SIZE;
-//        double y = playerY * CELL_SIZE;
-//        gc.fillRect(x, y, CELL_SIZE, CELL_SIZE);
-//    }
+    public void updateCanvas(double playerX, double playerY) {
+        gc.clearRect(0, 0, canvasHeight, canvasWidth);
+        double x = playerX;
+        double y = playerY;
+        gc.drawImage(hamster, x, y, imageWidth, imageHeight);
+        if (x != mouseX || y != mouseY) {
+            controller.move(mouseX, mouseY);
+        }
+    }
 }
