@@ -13,33 +13,6 @@ public class MovePet {
         this.pet = pet;
     }
 
-//    public void move(double mouseX, double mouseY) {
-//        double[] petPosition = {pet.getPositionX(), pet.getPositionY()};
-//        double width = playground.getCanvasWidth();
-//        double height = playground.getCanvasHeight();
-//        if (inArea) {
-//            if (pet.getPositionX() < mouseX && pet.getPositionX() < width) {
-//                pet.move(0.5, 0);
-//                petPosition[0] = pet.getPositionX();
-//            } else if (pet.getPositionX() > mouseX && pet.getPositionX() > 0) {
-//                pet.move(-0.5, 0);
-//                petPosition[0] = pet.getPositionX();
-//            }
-//            if (pet.getPositionY() < mouseY && pet.getPositionY() < height) {
-//                pet.move(0, 0.5);
-//                petPosition[1] = pet.getPositionY();
-//            } else if (pet.getPositionY() > mouseY && pet.getPositionY() > 0) {
-//                pet.move(0, -0.5);
-//                petPosition[1] = pet.getPositionY();
-//            }
-//            playground.updateCanvas(petPosition[0], petPosition[1]);
-//            try {
-//                Thread.sleep(10);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
 public void move(double mouseX, double mouseY) {
     double[] petPosition = {pet.getPositionX(), pet.getPositionY()};
     double width = playground.getCanvasWidth();

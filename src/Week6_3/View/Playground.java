@@ -47,15 +47,15 @@ public class Playground extends Application {
         canvas.setOnMouseMoved(event -> {
             mouseX = event.getX();
             mouseY = event.getY();
-//            double[] petPosition = controller.move(x, y);
             controller.move(mouseX, mouseY);
-//            System.out.println("Mouse moved to (" + mouseX + ", " + mouseY + ")");
         });
+
         canvas.setOnMouseEntered(event -> {
             controller.mouseInArea();
             inArea = true;
             System.out.println("Mouse entered canvas");
         });
+
         canvas.setOnMouseExited(event -> {
             controller.mouseOutArea();
             inArea = false;
