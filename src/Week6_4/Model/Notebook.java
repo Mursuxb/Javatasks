@@ -27,6 +27,11 @@ public class Notebook {
         public void setContent(String content) {
             this.content = content;
         }
+
+        @Override
+        public String toString() {
+            return this.title;
+        }
     }
 
 
@@ -41,9 +46,11 @@ public class Notebook {
     public void remove(String title) {
         notes.remove(title);
     }
-    public void update(Note note, String title, String content) {
+    public Note update(Note note, String title, String content) {
         notes.remove(note.getTitle());
-        notes.put(title, new Note (title, content));
+        Note newNote = new Note (title, content);
+        notes.put(title, newNote);
+        return newNote;
     }
 
 }

@@ -2,11 +2,10 @@ package Week6_4.Controller;
 
 import Week6_4.Model.Notebook;
 import Week6_4.View.NoteView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.util.Locale;
 
@@ -24,39 +23,57 @@ public class NoteController {
     @FXML
     private Button selectbutton;
     @FXML
-    private ChoiceBox<String> creatednotes;
+    private ListView<Notebook.Note> creatednotes;
+    private ObservableList<Notebook.Note> notes = FXCollections.observableArrayList();
     private Notebook notebook = new Notebook();
     private Notebook.Note selectednote;
+
+    @FXML
+    public void initialize() {
+        creatednotes.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        creatednotes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                selectednote = newValue;
+                notetitle.setText(newValue.getTitle());
+                notecontent.setText(newValue.getContent());
+                savebutton.visibleProperty().setValue(true);
+                deletebutton.visibleProperty().setValue(true);
+            }
+        });
+    }
 
     @FXML
     private void addnote() {
         Notebook.Note note = new Notebook.Note(notetitle.getText(), notecontent.getText());
         notebook.add(note);
-        creatednotes.getItems().add(note.getTitle());
+        notes.add(note);
+        creatednotes.setItems(notes);
         notetitle.setText("");
         notecontent.setText("");
     }
 
-    @FXML
-    private void selectnote() {
-        if (creatednotes.getValue() != null) {
-            selectednote = notebook.get(creatednotes.getValue());
-            notetitle.setText(selectednote.getTitle());
-            notecontent.setText(selectednote.getContent());
-            savebutton.visibleProperty().setValue(true);
-            deletebutton.visibleProperty().setValue(true);
-        }
-    }
+//    @FXML
+//    private void selectnote() {
+//        selectednote = creatednotes.getSelectionModel().getSelectedItem();
+//        notetitle.setText(selectednote.getTitle());
+//        notecontent.setText(selectednote.getContent());
+//
+//    }
+
     @FXML
     private void savenote() {
         if (selectednote != null) {
-            notebook.update(selectednote, notetitle.getText(), notecontent.getText());
+            Notebook.Note newNote = notebook.update(selectednote, notetitle.getText(), notecontent.getText());
             savebutton.visibleProperty().setValue(false);
             deletebutton.visibleProperty().setValue(false);
-            notetitle.setText("");
-            notecontent.setText("");
+            notes.remove(selectednote);
+            notes.add(newNote);
+            creatednotes.setItems(notes);
+            notetitle.clear();
+            notecontent.clear();
         }
     }
+
     @FXML
     private void deletenote() {
         if (selectednote != null) {
@@ -64,10 +81,13 @@ public class NoteController {
             creatednotes.getItems().remove(selectednote.getTitle());
             notetitle.setText("");
             notecontent.setText("");
+            notes.remove(selectednote);
+            creatednotes.setItems(notes);
             savebutton.visibleProperty().setValue(false);
             deletebutton.visibleProperty().setValue(false);
         }
     }
+
     public static void main(String[] args) {
         NoteView.launch(NoteView.class);
     }
