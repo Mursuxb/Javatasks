@@ -28,9 +28,7 @@ public class CollectionOperations {
             }
         });
         System.out.println("\n");
-        editedNumbers.forEach((number) -> {
-            sum.addAndGet(number);
-        });
+        editedNumbers.forEach(sum::addAndGet);
         System.out.println(sum);
 
     }
